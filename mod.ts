@@ -170,6 +170,11 @@ export class BetterMap<K, V> extends Map<K, V> {
   toJSON(): Record<string, unknown> {
     return this.json();
   }
+  /**
+   * Create a new map from an existing Map or an array of key-value pairs
+   * @param data - Existing Map / Array of Key-Value pairs.
+   * @returns {BetterMap<K1, V1>}
+   */
   static from<K1, V1>(data: Map<K1, V1> | [K1, V1][]): BetterMap<K1, V1> {
     const returnMap = new BetterMap<K1, V1>();
     if (data instanceof Map) {

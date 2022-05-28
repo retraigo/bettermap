@@ -144,3 +144,8 @@ class BetterMap<K, V> extends Map<K, V>
 
 ### static from(data: Map<K1, V1> | [K1, V1][]): BetterMap<K1, V1>
     Create a new map from an existing Map or an array of key-value pairs.
+
+## Support
+Do open a new issue or pr regarding bugs or improvements.
+
+[Join our Discord server!](https://discord.gg/A69vvdK)
