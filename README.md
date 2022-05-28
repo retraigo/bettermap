@@ -1,31 +1,43 @@
 # bettermap
+
 An extension of the Map class with more Array-like features.
 
 ## Installation
-There ain't no installation. It's a Deno module.
-```js
 
+There ain't no installation. It's a Deno module.
+
+## Usage
+
+```ts
+import { BetterMap } from "https://deno.land/x/bettermap/mod.ts";
+
+new BetterMap<string, unknown>();
 ```
 
-## Methods
-```js
+## Contructor
+
+```ts
 class BetterMap<K, V> extends Map<K, V>
 ```
 
+### constructor(name?: string)
 
-###  constructor(name?: string)
     Create a new BetterMap
 
     @param {`string`} name
         - A friendly name for the BetterMap
 
-###  array()
+## Methods
+
+### array()
+
     Convert the map into an array of values
 
     @return
         Array of items in the map
 
-###  every(fn: (v: V, k: K) => boolean): boolean
+### every(fn: (v: V, k: K) => boolean): boolean
+
     Array#every but for a Map
 
     @param fn
@@ -34,7 +46,8 @@ class BetterMap<K, V> extends Map<K, V>
     @return {`boolean`}
         True or false
 
-###  filter(fn: (v: V, k: K) => boolean): BetterMap<K, V>
+### filter(fn: (v: V, k: K) => boolean): BetterMap<K, V>
+
     Array#filter but for a Map
 
     @param fn
@@ -43,7 +56,7 @@ class BetterMap<K, V> extends Map<K, V>
     @return {`BetterMap`}
         BetterMap with elements that passed.
 
-###  find(fn: (v: V, k: K) => boolean): V | undefined
+### find(fn: (v: V, k: K) => boolean): V | undefined
 
     @param fn
         - Function to be passed.
@@ -51,23 +64,28 @@ class BetterMap<K, V> extends Map<K, V>
     @return
         A value from the map. If none found, returns undefined.
 
-###  first(): V | undefined
+### first(): V | undefined
+
     Get the first element from the map.
 
     @return
         The first element / undefined.
 
-###  firstKey(): K | undefined
+### firstKey(): K | undefined
+
     Get the first element's key from the map.
 
     @return
         The first element's key / undefined.
 
-###  json(): Record<string, unknown>
+### json(): Record<string, unknown>
+
     Convert the key-value pairs into key-value pairs... I mean a JavaScript object.
 
     @return {`Record<string, unknown>`}
-###  map(fn: (v: V, k: K) => T): T[] | []
+
+### map(fn: (v: V, k: K) => T): T[] | []
+
     Map the Map into an Array.
 
     @param fn
@@ -76,7 +94,8 @@ class BetterMap<K, V> extends Map<K, V>
     @return {`T[]`}
         Array.
 
-###  random(count): V | undefined | V[] | []
+### random(count): V | undefined | V[] | []
+
     Get a random element from the BetterMap.
 
     @param fn
@@ -85,7 +104,8 @@ class BetterMap<K, V> extends Map<K, V>
     @return {`boolean`}
         True or false
 
-###  reduce(fn: (acc: T, val: V) => T, first: T): T
+### reduce(fn: (acc: T, val: V) => T, first: T): T
+
     Array#reduce but for a Map
 
     @param fn
@@ -94,7 +114,8 @@ class BetterMap<K, V> extends Map<K, V>
     @return {`T`}
         Reduced data.
 
-###  some(fn: (val: V, key: K) => boolean): boolean
+### some(fn: (val: V, key: K) => boolean): boolean
+
     Array#some but for a Map
 
     @param fn
@@ -103,7 +124,8 @@ class BetterMap<K, V> extends Map<K, V>
     @return {`boolean`}
         True or false
 
-###  sort(fn: (v1: V, v2: V, k1: K, k2: K) => number): BetterMap<K, V>
+### sort(fn: (v1: V, v2: V, k1: K, k2: K) => number): BetterMap<K, V>
+
     Sort elements in the better map.
 
     @param fn
@@ -112,9 +134,12 @@ class BetterMap<K, V> extends Map<K, V>
     @return {`BetterMap<K, V>`}
         sorted BetterMap.
 
-###  toString(): string
-###  toJSON(): Record<string, unknown>
+### toString(): string
+
+### toJSON(): Record<string, unknown>
+
     Duplicate of BetterMap#json
 
     @return {`Record<string, unknown>`}
-###  static from(data: Map<K1, V1> | [K1, V1][]): BetterMap<K1, V1>
+
+### static from(data: Map<K1, V1> | [K1, V1][]): BetterMap<K1, V1>
