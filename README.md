@@ -1,4 +1,4 @@
-# bettermap
+# BetterMap
 
 An extension of the Map class with more Array-like features.
 
@@ -143,3 +143,4 @@ class BetterMap<K, V> extends Map<K, V>
     @return {`Record<string, unknown>`}
 
 ### static from(data: Map<K1, V1> | [K1, V1][]): BetterMap<K1, V1>
+    Create a new map from an existing Map or an array of key-value pairs.
