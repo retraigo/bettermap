@@ -124,8 +124,8 @@ export class BetterMap<K, V> extends Map<K, V> {
    * @param fn - Reducer function.
    * @returns {T} Reduced data.
    */
-  reduce<T>(fn: (acc: T, val: V) => T, first: T): T {
-    const iter = this.values();
+  reduce<T>(fn: (acc: T, val: [K, V]) => T, first: T): T {
+    const iter = this.entries();
     let val;
     let result = first === undefined ? iter.next().value : first;
     while ((val = iter.next().value) !== undefined) {
