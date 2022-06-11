@@ -16,7 +16,7 @@ export class BetterMap<K, V> extends Map<K, V> {
    * @returns Array of items in the map
    */
   array() {
-    return this.map((x) => x);
+    return this.map<V>((x: V) => x);
   }
   /**
    * Array#every but for a Map
@@ -73,10 +73,10 @@ export class BetterMap<K, V> extends Map<K, V> {
   }
   /**
    * Convert the key-value pairs into key-value pairs... I mean a JavaScript object.
-   * @returns {Record<string, unknown>}
+   * @returns {Record<string, V>}
    */
-  json(): Record<string, unknown> {
-    const json = {};
+  json(): Record<string, V> {
+    const json: Record<string, V> = {};
     for (const item of this.entries()) {
       Object.defineProperty(json, `${item[0]}`, {
         value: item[1],
@@ -102,8 +102,10 @@ export class BetterMap<K, V> extends Map<K, V> {
    * @param fn - Function to run on every element.
    * @returns {boolean} True or false
    */
-  random(count = 1): V | undefined | V[] | [] {
-    if (count === 1) return this.#random();
+  random(): V | undefined;
+  random(count: number): V[];
+  random(count?: number): V | undefined | V[] | [] {
+    if (!count) return this.#random();
     const randomArr = [];
     for (let c = count; c > 0; --c) {
       const random = this.#random();
@@ -165,9 +167,9 @@ export class BetterMap<K, V> extends Map<K, V> {
   }
   /**
    * Duplicate of BetterMap#json
-   * @returns {Record<string, unknown>}
+   * @returns {Record<string, V>}
    */
-  toJSON(): Record<string, unknown> {
+  toJSON(): Record<string, V> {
     return this.json();
   }
   /**
