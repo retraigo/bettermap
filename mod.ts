@@ -19,6 +19,20 @@ export class BetterMap<K, V> extends Map<K, V> {
     return this.map<V>((x: V) => x);
   }
   /**
+   * Return the nth element of the map. 
+   * @param {number} pos - Position to get data.
+   * @returns {V} Item at specified index.
+   */
+  at(pos: number): V | undefined {
+    if(pos > (this.size - 1)) pos = pos % (this.size - 1);
+    if(pos < 0) pos = (this.size) + (pos % (this.size - 1))
+    const val = this.values()
+    for(let i = 0; i < pos; ++i) {
+      val.next()
+    }
+    return val.next().value
+  }
+  /**
    * Array#every but for a Map
    * @param fn - Function to run on every element.
    * @returns {boolean} True or false
