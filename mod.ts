@@ -92,10 +92,11 @@ export class BetterMap<K, V> extends Map<K, V> {
   json(): Record<string, V> {
     const json: Record<string, V> = {};
     for (const item of this.entries()) {
-      Object.defineProperty(json, `${item[0]}`, {
-        value: item[1],
-        writable: true,
-      });
+      console.log(`${item[0]}`, item[1])
+      json[`${item[0]}`] = item[1]
+//      Object.defineProperty(json, `${item[0]}`, {
+//        value: item[1],
+//     });
     }
     return json;
   }
