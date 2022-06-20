@@ -12,7 +12,7 @@ import { BetterMap } from "./mod.ts"
 
 const b = new BetterMap<string, PokemonData>("Pokemon")
 for(const pokemon of Pokemon) {
-    b.set(pokemon.name, pokemon)
+    b.set(`${pokemon.name}`, pokemon)
 }
 
-console.log(b.at(-3237))
+console.log(JSON.stringify(b))
