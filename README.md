@@ -16,175 +16,145 @@ new BetterMap<string, unknown>();
 
 class BetterMap<K, V> extends Map<K, V>
 
-  @constructor
+### constructor(name?: string)
 
-  constructor(name?: string)
-    Create a new BetterMap
+Create a new BetterMap
 
-    @param {string} name
-        A friendly name for the BetterMap
+Param: name: string - A friendly name for the BetterMap
 
-  name: string
-  array(): V[]
-    Convert the map into an array of values / keys
 
-    @return
-        Array of items in the map
+@return
+Array of items in the map
 
-  ### `array(keys: boolean): K[]`
-  ### `array(keys): K[] | V[]`
-  ### `at(pos: number): V | undefined`
-    Return the nth element of the map.
+### `array(keys: boolean): K[]`
+### `array(keys): K[] | V[]`
+Convert the map into an array of values / keys
 
-    @param {number} pos
-        Position to get data.
+### `at(pos: number): V | undefined`
+Return the nth element of the map.
 
-    @return {V}
-        Item at specified index.
+Param: pos: number - Position to get data.
 
-  ### `every(fn: (v: V, k: K) => boolean): boolean`
-    Array#every but for a Map
+Returns: {V} - Item at specified index.
 
-    @param fn
-        Function to run on every element.
+### `every(fn: (v: V, k: K) => boolean): boolean`
+Array#every but for a Map
 
-    @return {boolean}
-        True or false
+Param: fn - Function to run on every element.
 
-  ### `filter(fn: (v: V, k: K) => boolean): BetterMap<K, V>`
-    Array#filter but for a Map
+Returns: {boolean} - True or false
 
-    @param fn
-        Function to be passed.
+### `filter(fn: (v: V, k: K) => boolean): BetterMap<K, V>`
+Array#filter but for a Map
 
-    @return {BetterMap}
-        BetterMap with elements that passed.
+Param: fn - Function to be passed.
 
-  ### `find(fn: (v: V, k: K) => boolean): V | undefined`
+Returns: {BetterMap} - BetterMap with elements that passed.
 
-    @param fn
-        Function to be passed.
+### `find(fn: (v: V, k: K) => boolean): V | undefined`
 
-    @return
-        A value from the map. If none found, returns undefined.
+Param: fn - Function to be passed.
 
-  ### `findKey(fn: (v: V, k: K) => boolean): K | undefined`
+@return
+A value from the map. If none found, returns undefined.
 
-    @param fn
-        Function to be passed.
+### `findKey(fn: (v: V, k: K) => boolean): K | undefined`
 
-    @return
-        A key from the map. If none found, returns undefined.
+Param: fn - Function to be passed.
 
-  first(): V | undefined
-    Get the first element(s) from the map.
+@return
+A key from the map. If none found, returns undefined.
 
-    @param {number} n
-        Number of elements to fetch.
+first(): V | undefined
+Get the first element(s) from the map.
 
-    @return
-        The first element / undefined.
+Param: n: number - Number of elements to fetch.
 
-  ### `first(n: number): V[]`
-  ### `first(n?: number): V | V[] | undefined`
-  firstKey(): K | undefined
-    Get the first (n) element's key from the map.
+@return
+The first element / undefined.
 
-    @param {number} n
-        Number of elements to fetch.
+### `first(n: number): V[]`
+### `first(n?: number): V | V[] | undefined`
+firstKey(): K | undefined
+Get the first (n) element's key from the map.
 
-    @return
-        The first element's key / undefined.
+Param: n: number - Number of elements to fetch.
 
-  ### `firstKey(n: number): K[]`
-  ### `firstKey(n?: number): K | K[] | undefined`
-  json(): Record<string, V>
-    Convert the key-value pairs into key-value pairs... I mean a JavaScript object.
+@return
+The first element's key / undefined.
 
-    @return {Record<string, V>}
-  ### `keyAt(pos: number): K | undefined`
-    Return the nth key of the map.
+### `firstKey(n: number): K[]`
+### `firstKey(n?: number): K | K[] | undefined`
+json(): Record<string, V>
+Convert the key-value pairs into key-value pairs... I mean a JavaScript object.
 
-    @param {number} pos
-        Position to get data.
+Returns: {Record<string, V>} - keyAt(pos: number): K | undefined`
+Return the nth key of the map.
 
-    @return {K}
-        Key at specified index.
+Param: pos: number - Position to get data.
 
-  last(): V | undefined
-    Get last value(s) in the Map.
-  ### `last(n: number): V[]`
-  ### `last(n?: number): V | V[] | undefined`
-  lastKey(): K | undefined
-    Get last key(s) in the Map.
-  ### `lastKey(n: number): K[]`
-  ### `lastKey(n?: number): K | K[] | undefined`
-  ### `map(fn: (v: V, k: K) => T): T[] | []`
-    Map the Map into an Array.
+Returns: {K} - Key at specified index.
 
-    @param fn
-        Function for mapping.
+last(): V | undefined
+Get last value(s) in the Map.
+### `last(n: number): V[]`
+### `last(n?: number): V | V[] | undefined`
+lastKey(): K | undefined
+Get last key(s) in the Map.
+### `lastKey(n: number): K[]`
+### `lastKey(n?: number): K | K[] | undefined`
+### `map(fn: (v: V, k: K) => T): T[] | []`
+Map the Map into an Array.
 
-    @return {T[]}
-        Array.
+Param: fn - Function for mapping.
 
-  random(): V | undefined
-    Get a random element from the BetterMap.
+Returns: {T[]} - Array.
 
-    @return {boolean}
-        True or false
+random(): V | undefined
+Get a random element from the BetterMap.
 
-  ### `random(count: number): V[]`
-  ### `random(count?: number): V | undefined | V[]`
-  randomKey(): K | undefined
-    Get a random key from the BetterMap.
+Returns: {boolean} - True or false
 
-    @return {boolean}
-        True or false
+### `random(count: number): V[]`
+### `random(count?: number): V | undefined | V[]`
+randomKey(): K | undefined
+Get a random key from the BetterMap.
 
-  ### `randomKey(count: number): K[]`
-  ### `randomKey(count?: number): K | undefined | K[]`
-  ### `reduce(fn: (acc: T, val: [K, V]) => T, first: T): T`
-    Reduce data in the map.
+Returns: {boolean} - True or false
 
-    @param fn
-        Reducer function.
+### `randomKey(count: number): K[]`
+### `randomKey(count?: number): K | undefined | K[]`
+### `reduce(fn: (acc: T, val: [K, V]) => T, first: T): T`
+Reduce data in the map.
 
-    @return {T}
-        Reduced data.
+Param: fn - Reducer function.
 
-  ### `some(fn: (val: V, key: K) => boolean): boolean`
-    Check if at least one entry from the Map passes the function.
+Returns: {T} - Reduced data.
 
-    @param fn
-        Function to run on every element.
+### `some(fn: (val: V, key: K) => boolean): boolean`
+Check if at least one entry from the Map passes the function.
 
-    @return {boolean}
-        True or false
+Param: fn - Function to run on every element.
 
-  ### `sort(fn: (v1: V, v2: V, k1: K, k2: K) => number): BetterMap<K, V>`
-    Sort elements in the better map.
+Returns: {boolean} - True or false
 
-    @param fn
-        Function to use for sorting.
+### `sort(fn: (v1: V, v2: V, k1: K, k2: K) => number): BetterMap<K, V>`
+Sort elements in the better map.
 
-    @return {BetterMap<K, V>}
-        sorted BetterMap.
+Param: fn - Function to use for sorting.
 
-  toString(): string
-  toJSON(): Record<string, V>
-    Duplicate of BetterMap#json
+Returns: {BetterMap<K, V>} - sorted BetterMap.
 
-    @return {Record<string, V>}
-  static ### `from(data: Map<K1, V1> | [K1, V1][]): BetterMap<K1, V1>`
-    Create a new map from an existing Map or an array of key-value pairs
+toString(): string
+toJSON(): Record<string, V>
+Duplicate of BetterMap#json
 
-    @param data
-        Existing Map / Array of Key-Value pairs.
+Returns: {Record<string, V>} - static ### `from(data: Map<K1, V1> | [K1, V1][]): BetterMap<K1, V1>`
+Create a new map from an existing Map or an array of key-value pairs
 
-    @return {BetterMap<K1, V1>}
+Param: data - Existing Map / Array of Key-Value pairs.
 
-## Support
+Returns: {BetterMap<K1, V1>} - Support
 Do open a new issue or pr regarding bugs or improvements.
 
 [Join our Discord server!](https://discord.gg/A69vvdK)
