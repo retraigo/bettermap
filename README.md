@@ -318,6 +318,15 @@ Duplicate of BetterMap#json
 
 Returns: {Record<string, V>} -
 
+### `transform(fn: (v: V, k: K) => T): BetterMap<K, T>`
+
+Transform values of the map.
+Similar to `map()` but returns a BetterMap instead.
+
+Param: fn - Function for mapping.
+
+Returns: BetterMap<K, T>
+
 ### static `from(data: Map<K1, V1> | [K1, V1][]): BetterMap<K1, V1>`
 
 Create a new map from an existing Map or an array of key-value pairs

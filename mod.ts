@@ -272,6 +272,19 @@ export class BetterMap<K, V> extends Map<K, V> {
     return this.json();
   }
   /**
+   * Transform values of the map.
+   * Similar to map() but returns a BetterMap instead.
+   * @param fn Function for mapping.
+   * @returns 
+   */
+  transform<T>(fn: (v: V, k: K) => T): BetterMap<K, T> {
+    const newMap = new BetterMap<K, T>(this.name);
+    this.forEach((v, k) => {
+      newMap.set(k, fn(v, k))
+    })
+    return newMap;
+  }
+  /**
    * Create a new map from an existing Map or an array of key-value pairs
    * @param data Existing Map / Array of Key-Value pairs.
    * @returns {BetterMap<K1, V1>}
