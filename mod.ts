@@ -5,7 +5,7 @@ export class BetterMap<K, V> extends Map<K, V> {
   name: string;
   /**
    * Create a new BetterMap
-   * @param {string} name - A friendly name for the BetterMap
+   * @param {string} name A friendly name for the BetterMap
    */
   constructor(name?: string) {
     super();
@@ -22,7 +22,7 @@ export class BetterMap<K, V> extends Map<K, V> {
   }
   /**
    * Return the nth element of the map.
-   * @param {number} pos - Position to get data.
+   * @param {number} pos Position to get data.
    * @returns {V} Item at specified index.
    */
   at(pos: number): V | undefined {
@@ -131,7 +131,7 @@ export class BetterMap<K, V> extends Map<K, V> {
   }
   /**
    * Return the nth key of the map.
-   * @param {number} pos - Position to get data.
+   * @param {number} pos Position to get data.
    * @returns {K} Key at specified index.
    */
   keyAt(pos: number): K | undefined {
