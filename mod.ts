@@ -93,6 +93,7 @@ export class BetterMap<K, V> extends Map<K, V> {
   first(): V | undefined;
   first(n: number): V[];
   first(n?: number): V | V[] | undefined {
+    if(n && n < 0) return this.last(-n)
     const iter = this.values();
     if (n && n > this.size) return;
     return (typeof n === "number" && !isNaN(n))
@@ -104,9 +105,10 @@ export class BetterMap<K, V> extends Map<K, V> {
    * @param {number} n Number of elements to fetch.
    * @returns The first element's key / undefined.
    */
-  firstKey(): V | undefined;
-  firstKey(n: number): V[];
-  firstKey(n?: number): V | V[] | undefined {
+  firstKey(): K | undefined;
+  firstKey(n: number): K[];
+  firstKey(n?: number): K | K[] | undefined {
+    if(n && n < 0) return this.firstKey(-n)
     const iter = this.keys();
     if (n && n > this.size) return;
     return (typeof n === "number" && !isNaN(n))
@@ -147,6 +149,7 @@ export class BetterMap<K, V> extends Map<K, V> {
   last(): V | undefined;
   last(n: number): V[];
   last(n?: number): V | V[] | undefined {
+    if(n && n < 0) return this.first(-n)
     const arr = this.array();
     return (typeof n === "number" && !isNaN(n))
       ? arr.slice(-n)
@@ -158,6 +161,7 @@ export class BetterMap<K, V> extends Map<K, V> {
   lastKey(): K | undefined;
   lastKey(n: number): K[];
   lastKey(n?: number): K | K[] | undefined {
+    if(n && n < 0) return this.firstKey(-n)
     const arr = this.array(true);
     return (typeof n === "number" && !isNaN(n))
       ? arr.slice(-n)
