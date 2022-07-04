@@ -148,12 +148,11 @@ export class BetterMap<K, V> extends Map<K, V> {
   }
   /**
    * Get a random element from the BetterMap.
-   * @param fn Function to run on every element.
    * @returns {boolean} True or false
    */
   random(): V | undefined;
   random(count: number): V[];
-  random(count?: number): V | undefined | V[] | [] {
+  random(count?: number): V | undefined | V[] {
     if (!count) return this.#random();
     const randomArr = [];
     for (let c = count; c > 0; --c) {
@@ -162,9 +161,26 @@ export class BetterMap<K, V> extends Map<K, V> {
     }
     return randomArr;
   }
-  #random(): V | undefined {
+  /**
+   * Get a random key from the BetterMap.
+   * @returns {boolean} True or false
+   */
+   randomKey(): K | undefined;
+   randomKey(count: number): K[];
+   randomKey(count?: number): K | undefined | K[] {
+     if (!count) return this.#random(true);
+     const randomArr = [];
+     for (let c = count; c > 0; --c) {
+       const random = this.#random(true);
+       if (random) randomArr.push(random);
+     }
+     return randomArr;
+   }
+  #random(): V | undefined;
+  #random(key: boolean): K | undefined;
+  #random(key=false): V | K | undefined {
     const max = Math.floor(Math.random() * this.size);
-    const iter = this.values();
+    const iter = key ? this.keys() : this.values();
     for (let i = 0; i < max; ++i) {
       iter.next();
     }
