@@ -17,7 +17,7 @@ export class BetterMap<K, V> extends Map<K, V> {
    */
   array(): V[];
   array(keys: boolean): K[];
-  array(keys = false): K[] | V[]  {
+  array(keys = false): K[] | V[] {
     return keys ? this.map<K>((_: V, x: K) => x) : this.map<V>((x: V) => x);
   }
   /**
@@ -74,6 +74,18 @@ export class BetterMap<K, V> extends Map<K, V> {
     return undefined;
   }
   /**
+   * @param fn Function to be passed.
+   * @returns A key from the map. If none found, returns undefined.
+   */
+  findKey(fn: (v: V, k: K) => boolean): K | undefined {
+    for (const [k, v] of this.entries()) {
+      if (fn(v, k)) {
+        return k;
+      }
+    }
+    return undefined;
+  }
+  /**
    * Get the first element(s) from the map.
    * @param {number} n Number of elements to fetch.
    * @returns The first element / undefined.
@@ -116,13 +128,29 @@ export class BetterMap<K, V> extends Map<K, V> {
     return json;
   }
   /**
+   * Return the nth key of the map.
+   * @param {number} pos - Position to get data.
+   * @returns {K} Key at specified index.
+   */
+  keyAt(pos: number): K | undefined {
+    if (pos > (this.size - 1)) pos = pos % (this.size - 1);
+    if (pos < 0) pos = (this.size) + (pos % (this.size - 1));
+    const val = this.keys();
+    for (let i = 0; i < pos; ++i) {
+      val.next();
+    }
+    return val.next().value;
+  }
+  /**
    * Get last value(s) in the Map.
    */
   last(): V | undefined;
   last(n: number): V[];
   last(n?: number): V | V[] | undefined {
     const arr = this.array();
-    return (typeof n === "number" && !isNaN(n)) ? arr.slice(-n) : arr[arr.length - 1];
+    return (typeof n === "number" && !isNaN(n))
+      ? arr.slice(-n)
+      : arr[arr.length - 1];
   }
   /**
    * Get last key(s) in the Map.
@@ -131,7 +159,9 @@ export class BetterMap<K, V> extends Map<K, V> {
   lastKey(n: number): K[];
   lastKey(n?: number): K | K[] | undefined {
     const arr = this.array(true);
-    return (typeof n === "number" && !isNaN(n)) ? arr.slice(-n) : arr[arr.length - 1];
+    return (typeof n === "number" && !isNaN(n))
+      ? arr.slice(-n)
+      : arr[arr.length - 1];
   }
 
   /**
@@ -165,20 +195,20 @@ export class BetterMap<K, V> extends Map<K, V> {
    * Get a random key from the BetterMap.
    * @returns {boolean} True or false
    */
-   randomKey(): K | undefined;
-   randomKey(count: number): K[];
-   randomKey(count?: number): K | undefined | K[] {
-     if (!count) return this.#random(true);
-     const randomArr = [];
-     for (let c = count; c > 0; --c) {
-       const random = this.#random(true);
-       if (random) randomArr.push(random);
-     }
-     return randomArr;
-   }
+  randomKey(): K | undefined;
+  randomKey(count: number): K[];
+  randomKey(count?: number): K | undefined | K[] {
+    if (!count) return this.#random(true);
+    const randomArr = [];
+    for (let c = count; c > 0; --c) {
+      const random = this.#random(true);
+      if (random) randomArr.push(random);
+    }
+    return randomArr;
+  }
   #random(): V | undefined;
   #random(key: boolean): K | undefined;
-  #random(key=false): V | K | undefined {
+  #random(key = false): V | K | undefined {
     const max = Math.floor(Math.random() * this.size);
     const iter = key ? this.keys() : this.values();
     for (let i = 0; i < max; ++i) {
