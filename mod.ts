@@ -5,6 +5,11 @@ export class BetterMap<K, V> extends Map<K, V> {
   name: string;
   /**
    * Create a new BetterMap
+   * ```ts
+   * const map1 = new BetterMap();
+   * const map2 = new BetterMap<string, number>();
+   * const map3 = new BetterMap<string, number>("People");
+   * ```
    * @param {string} name A friendly name for the BetterMap
    */
   constructor(name?: string) {
@@ -13,6 +18,12 @@ export class BetterMap<K, V> extends Map<K, V> {
   }
   /**
    * Convert the map into an array of values / keys
+   * ```ts
+   * const map = new BetterMap<string, number>("People");
+   * map.set("Doraemon", 10);
+   * map.set("Dora", 28);
+   * console.log(map.array());
+   * ```
    * @returns Array of items in the map
    */
   array(): V[];
@@ -22,6 +33,12 @@ export class BetterMap<K, V> extends Map<K, V> {
   }
   /**
    * Return the nth element of the map.
+   * ```ts
+   * const map = new BetterMap<string, number>("People");
+   * map.set("Doraemon", 10);
+   * map.set("Dora", 28);
+   * console.log(map.at(-1)); // 28
+   * ```
    * @param {number} pos Position to get data.
    * @returns {V} Item at specified index.
    */
@@ -36,6 +53,13 @@ export class BetterMap<K, V> extends Map<K, V> {
   }
   /**
    * Array#every but for a Map
+   * ```ts
+   * const map = new BetterMap<string, number>("People");
+   * map.set("Doraemon", 10);
+   * map.set("Dora", 28);
+   * console.log(map.every(v => v > 10)); // false
+   * console.log(map.every((_v, k) => k.startsWith("Dora"))); // true
+   * ```
    * @param fn Function to run on every element.
    * @returns {boolean} True or false
    */
@@ -49,6 +73,13 @@ export class BetterMap<K, V> extends Map<K, V> {
   }
   /**
    * Array#filter but for a Map
+   * ```ts
+   * const map = new BetterMap<string, number>("People");
+   * map.set("Doraemon", 10);
+   * map.set("Dora", 28);
+   * console.log(map.filter(v => v > 10));
+   * console.log(map.filter((_v, k) => k.startsWith("Dora")))
+   * ```
    * @param fn Function to be passed.
    * @returns {BetterMap} BetterMap with elements that passed.
    */
@@ -62,6 +93,13 @@ export class BetterMap<K, V> extends Map<K, V> {
     return newColl;
   }
   /**
+   * Find an element from the Map.
+   * ```ts
+   * const map = new BetterMap<string, number>("People");
+   * map.set("Doraemon", 10);
+   * map.set("Dora", 28);
+   * console.log(map.find(v => v > 10)); // 28
+   * ```
    * @param fn Function to be passed.
    * @returns A value from the map. If none found, returns undefined.
    */
@@ -74,6 +112,13 @@ export class BetterMap<K, V> extends Map<K, V> {
     return undefined;
   }
   /**
+   * Find a key from the Map.
+   * ```ts
+   * const map = new BetterMap<string, number>("People");
+   * map.set("Doraemon", 10);
+   * map.set("Dora", 28);
+   * console.log(map.findKey(v => v > 10)); // Dora
+   * ```
    * @param fn Function to be passed.
    * @returns A key from the map. If none found, returns undefined.
    */
@@ -87,6 +132,12 @@ export class BetterMap<K, V> extends Map<K, V> {
   }
   /**
    * Get the first element(s) from the map.
+   * ```ts
+   * const map = new BetterMap<string, number>("People");
+   * map.set("Doraemon", 10);
+   * map.set("Dora", 28);
+   * console.log(map.first()); // 10
+   * ```
    * @param {number} n Number of elements to fetch.
    * @returns The first element / undefined.
    */
@@ -102,6 +153,12 @@ export class BetterMap<K, V> extends Map<K, V> {
   }
   /**
    * Get the first (n) element's key from the map.
+   * ```ts
+   * const map = new BetterMap<string, number>("People");
+   * map.set("Doraemon", 10);
+   * map.set("Dora", 28);
+   * console.log(map.firstKey()); // Doraemon
+   * ```
    * @param {number} n Number of elements to fetch.
    * @returns The first element's key / undefined.
    */
@@ -117,6 +174,13 @@ export class BetterMap<K, V> extends Map<K, V> {
   }
   /**
    * Convert the key-value pairs into key-value pairs... I mean a JavaScript object.
+   * ```ts
+   * const map = new BetterMap<string, number>("People");
+   * map.set("Doraemon", 10);
+   * map.set("Dora", 28);
+   * console.log(map.json());
+   * // {Doraemon: 10, Dora: 28}
+   * ```
    * @returns {Record<string, V>}
    */
   json(): Record<string, V> {
@@ -131,6 +195,12 @@ export class BetterMap<K, V> extends Map<K, V> {
   }
   /**
    * Return the nth key of the map.
+   * ```ts
+   * const map = new BetterMap<string, number>("People");
+   * map.set("Doraemon", 10);
+   * map.set("Dora", 28);
+   * console.log(map.keyAt(-1)); // Dora
+   * ```
    * @param {number} pos Position to get data.
    * @returns {K} Key at specified index.
    */
@@ -170,6 +240,13 @@ export class BetterMap<K, V> extends Map<K, V> {
 
   /**
    * Map the Map into an Array.
+   * ```ts
+   * const map = new BetterMap<string, number>("People");
+   * map.set("Doraemon", 10);
+   * map.set("Dora", 28);
+   * console.log(map.map(v => v - 10)); // [0, 18]
+   * console.log(map.every((v, k) => k+v))); // ["Doraemon10", "Dora28"]
+   * ```
    * @param fn Function for mapping.
    * @returns {T[]} Array.
    */
@@ -182,6 +259,12 @@ export class BetterMap<K, V> extends Map<K, V> {
   }
   /**
    * Get a random element from the BetterMap.
+   * ```ts
+   * const map = new BetterMap<string, number>("People");
+   * map.set("Doraemon", 10);
+   * map.set("Dora", 28);
+   * console.log(map.random());
+   * ```
    * @returns {boolean} True or false
    */
   random(): V | undefined;
@@ -197,6 +280,12 @@ export class BetterMap<K, V> extends Map<K, V> {
   }
   /**
    * Get a random key from the BetterMap.
+   * ```ts
+   * const map = new BetterMap<string, number>("People");
+   * map.set("Doraemon", 10);
+   * map.set("Dora", 28);
+   * console.log(map.randomKey());
+   * ```
    * @returns {boolean} True or false
    */
   randomKey(): K | undefined;
@@ -222,6 +311,13 @@ export class BetterMap<K, V> extends Map<K, V> {
   }
   /**
    * Reduce data in the map.
+   * ```ts
+   * const map = new BetterMap<string, number>("People");
+   * map.set("Doraemon", 10);
+   * map.set("Dora", 28);
+   * console.log(map.reduce((acc, val) => acc + (val[1] > 10 ? "a" : "b") + val[0], ""));
+   * // bDoraemonaDora
+   * ```
    * @param fn Reducer function.
    * @returns {T} Reduced data.
    */
@@ -236,6 +332,13 @@ export class BetterMap<K, V> extends Map<K, V> {
   }
   /**
    * Check if at least one entry from the Map passes the function.
+   * ```ts
+   * const map = new BetterMap<string, number>("People");
+   * map.set("Doraemon", 10);
+   * map.set("Dora", 28);
+   * console.log(map.some(v => v > 10)); // True
+   * console.log(map.some(_v, k) => k.startsWith("Doras"))); // False
+   * ```
    * @param fn Function to run on every element.
    * @returns {boolean} True or false
    */
