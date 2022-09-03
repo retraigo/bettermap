@@ -93,7 +93,7 @@ export class BetterMap<K, V> extends Map<K, V> {
   first(): V | undefined;
   first(n: number): V[];
   first(n?: number): V | V[] | undefined {
-    if(n && n < 0) return this.last(-n)
+    if (n && n < 0) return this.last(-n);
     const iter = this.values();
     if (n && n > this.size) return;
     return (typeof n === "number" && !isNaN(n))
@@ -108,7 +108,7 @@ export class BetterMap<K, V> extends Map<K, V> {
   firstKey(): K | undefined;
   firstKey(n: number): K[];
   firstKey(n?: number): K | K[] | undefined {
-    if(n && n < 0) return this.firstKey(-n)
+    if (n && n < 0) return this.firstKey(-n);
     const iter = this.keys();
     if (n && n > this.size) return;
     return (typeof n === "number" && !isNaN(n))
@@ -149,7 +149,7 @@ export class BetterMap<K, V> extends Map<K, V> {
   last(): V | undefined;
   last(n: number): V[];
   last(n?: number): V | V[] | undefined {
-    if(n && n < 0) return this.first(-n)
+    if (n && n < 0) return this.first(-n);
     const arr = this.array();
     return (typeof n === "number" && !isNaN(n))
       ? arr.slice(-n)
@@ -161,7 +161,7 @@ export class BetterMap<K, V> extends Map<K, V> {
   lastKey(): K | undefined;
   lastKey(n: number): K[];
   lastKey(n?: number): K | K[] | undefined {
-    if(n && n < 0) return this.firstKey(-n)
+    if (n && n < 0) return this.firstKey(-n);
     const arr = this.array(true);
     return (typeof n === "number" && !isNaN(n))
       ? arr.slice(-n)
@@ -261,6 +261,21 @@ export class BetterMap<K, V> extends Map<K, V> {
     }
     return newColl;
   }
+  /**
+   * Split the Map into two Maps using a filtering function.
+   * @param fn Function to be passed.
+   * @returns An array of two maps: First map containing elements that passed and second map containing elements that didn't pass.
+   */
+  split(fn: (v: V, k: K) => boolean): [BetterMap<K, V>, BetterMap<K, V>] {
+    const newCollPassed = new BetterMap<K, V>(this.name);
+    const newCollNotPassed = new BetterMap<K, V>(this.name);
+    for (const [key, val] of this.entries()) {
+      if (fn(val, key)) {
+        newCollPassed.set(key, val);
+      } else newCollNotPassed.set(key, val);
+    }
+    return [newCollPassed, newCollNotPassed];
+  }
   toString(): string {
     return `[BetterMap[${this.size}] of <${this.name}>]`;
   }
@@ -275,13 +290,13 @@ export class BetterMap<K, V> extends Map<K, V> {
    * Transform values of the map.
    * Similar to map() but returns a BetterMap instead.
    * @param fn Function for mapping.
-   * @returns 
+   * @returns
    */
   transform<T>(fn: (v: V, k: K) => T): BetterMap<K, T> {
     const newMap = new BetterMap<K, T>(this.name);
     this.forEach((v, k) => {
-      newMap.set(k, fn(v, k))
-    })
+      newMap.set(k, fn(v, k));
+    });
     return newMap;
   }
   /**
