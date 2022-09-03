@@ -93,7 +93,7 @@ export class BetterMap<K, V> extends Map<K, V> {
   first(): V | undefined;
   first(n: number): V[];
   first(n?: number): V | V[] | undefined {
-    if(n && n < 0) return this.last(-n)
+    if (n && n < 0) return this.last(-n);
     const iter = this.values();
     if (n && n > this.size) return;
     return (typeof n === "number" && !isNaN(n))
@@ -108,7 +108,7 @@ export class BetterMap<K, V> extends Map<K, V> {
   firstKey(): K | undefined;
   firstKey(n: number): K[];
   firstKey(n?: number): K | K[] | undefined {
-    if(n && n < 0) return this.firstKey(-n)
+    if (n && n < 0) return this.firstKey(-n);
     const iter = this.keys();
     if (n && n > this.size) return;
     return (typeof n === "number" && !isNaN(n))
@@ -149,7 +149,7 @@ export class BetterMap<K, V> extends Map<K, V> {
   last(): V | undefined;
   last(n: number): V[];
   last(n?: number): V | V[] | undefined {
-    if(n && n < 0) return this.first(-n)
+    if (n && n < 0) return this.first(-n);
     const arr = this.array();
     return (typeof n === "number" && !isNaN(n))
       ? arr.slice(-n)
@@ -161,7 +161,7 @@ export class BetterMap<K, V> extends Map<K, V> {
   lastKey(): K | undefined;
   lastKey(n: number): K[];
   lastKey(n?: number): K | K[] | undefined {
-    if(n && n < 0) return this.firstKey(-n)
+    if (n && n < 0) return this.firstKey(-n);
     const arr = this.array(true);
     return (typeof n === "number" && !isNaN(n))
       ? arr.slice(-n)
@@ -261,6 +261,21 @@ export class BetterMap<K, V> extends Map<K, V> {
     }
     return newColl;
   }
+  /**
+   * Split the Map into two Maps using a filtering function.
+   * @param fn Function to be passed.
+   * @returns An array of two maps: First map containing elements that passed and second map containing elements that didn't pass.
+   */
+  split(fn: (v: V, k: K) => boolean): [BetterMap<K, V>, BetterMap<K, V>] {
+    const newCollPassed = new BetterMap<K, V>(this.name);
+    const newCollNotPassed = new BetterMap<K, V>(this.name);
+    for (const [key, val] of this.entries()) {
+      if (fn(val, key)) {
+        newCollPassed.set(key, val);
+      } else newCollNotPassed.set(key, val);
+    }
+    return [newCollPassed, newCollNotPassed];
+  }
   toString(): string {
     return `[BetterMap[${this.size}] of <${this.name}>]`;
   }
@@ -275,14 +290,27 @@ export class BetterMap<K, V> extends Map<K, V> {
    * Transform values of the map.
    * Similar to map() but returns a BetterMap instead.
    * @param fn Function for mapping.
-   * @returns 
+   * @returns
    */
   transform<T>(fn: (v: V, k: K) => T): BetterMap<K, T> {
     const newMap = new BetterMap<K, T>(this.name);
     this.forEach((v, k) => {
-      newMap.set(k, fn(v, k))
-    })
+      newMap.set(k, fn(v, k));
+    });
     return newMap;
+  }
+  /**
+   * Add all non-similar keys from another Map to this Map.
+   * @param maps Map to combine with this instance.
+   * @returns The modified Map.
+   */
+  combine(...maps: Map<K, V>[]): BetterMap<K, V> {
+    for (const map of maps) {
+      for (const entry of map.entries()) {
+        if (this.has(entry[0])) this.set(entry[0], entry[1]);
+      }
+    }
+    return this;
   }
   /**
    * Create a new map from an existing Map or an array of key-value pairs
@@ -298,5 +326,40 @@ export class BetterMap<K, V> extends Map<K, V> {
       data.forEach(([k, v]) => returnMap.set(k, v));
     }
     return returnMap;
+  }
+  /**
+   * Return the union of two maps. Maps are united by key and not by value.
+   * @param maps Maps to combine.
+   * @returns The modified Map.
+   */
+  static union<K1, V1>(
+    ...maps: Map<K1, V1>[]
+  ): BetterMap<K1, V1> {
+    // TODO: Check value matches for union.
+    const newMap = maps[0] instanceof BetterMap
+      ? maps[0]
+      : BetterMap.from(maps[0]);
+    maps.shift();
+    for (const map of maps) {
+      for (const entry of map.entries()) {
+        if (newMap.has(entry[0])) newMap.set(entry[0], entry[1]);
+      }
+    }
+    return newMap;
+  }
+  /**
+   * Return a Map with elements common to all maps supplied in the parameters.
+   * @param maps Maps to intersect.
+   * @returns BetterMap as an intersection of all provided Maps.
+   */
+  static intersect<K1, V1>(
+    ...maps: Map<K1, V1>[]
+  ): BetterMap<K1, V1> {
+    const newMap = maps[0] instanceof BetterMap
+      ? maps[0]
+      : BetterMap.from(maps[0]);
+    maps.shift();
+    const result = newMap.filter((_v, k) => maps.every((map) => map.has(k)));
+    return result;
   }
 }
