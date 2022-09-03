@@ -300,6 +300,19 @@ export class BetterMap<K, V> extends Map<K, V> {
     return newMap;
   }
   /**
+   * Add all non-similar keys from another Map to this Map.
+   * @param maps Map to combine with this instance.
+   * @returns The modified Map.
+   */
+  combine(...maps: Map<K, V>[]): BetterMap<K, V> {
+    for (const map of maps) {
+      for (const entry of map.entries()) {
+        if (this.has(entry[0])) this.set(entry[0], entry[1]);
+      }
+    }
+    return this;
+  }
+  /**
    * Create a new map from an existing Map or an array of key-value pairs
    * @param data Existing Map / Array of Key-Value pairs.
    * @returns {BetterMap<K1, V1>}
@@ -313,5 +326,40 @@ export class BetterMap<K, V> extends Map<K, V> {
       data.forEach(([k, v]) => returnMap.set(k, v));
     }
     return returnMap;
+  }
+  /**
+   * Return the union of two maps. Maps are united by key and not by value.
+   * @param maps Maps to combine.
+   * @returns The modified Map.
+   */
+  static union<K1, V1>(
+    ...maps: Map<K1, V1>[]
+  ): BetterMap<K1, V1> {
+    // TODO: Check value matches for union.
+    const newMap = maps[0] instanceof BetterMap
+      ? maps[0]
+      : BetterMap.from(maps[0]);
+    maps.shift();
+    for (const map of maps) {
+      for (const entry of map.entries()) {
+        if (newMap.has(entry[0])) newMap.set(entry[0], entry[1]);
+      }
+    }
+    return newMap;
+  }
+  /**
+   * Return a Map with elements common to all maps supplied in the parameters.
+   * @param maps Maps to intersect.
+   * @returns BetterMap as an intersection of all provided Maps.
+   */
+  static intersect<K1, V1>(
+    ...maps: Map<K1, V1>[]
+  ): BetterMap<K1, V1> {
+    const newMap = maps[0] instanceof BetterMap
+      ? maps[0]
+      : BetterMap.from(maps[0]);
+    maps.shift();
+    const result = newMap.filter((_v, k) => maps.every((map) => map.has(k)));
+    return result;
   }
 }
