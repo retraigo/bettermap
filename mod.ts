@@ -215,6 +215,12 @@ export class BetterMap<K, V> extends Map<K, V> {
   }
   /**
    * Get last value(s) in the Map.
+   * ```ts
+   * const map = new BetterMap<string, number>("People");
+   * map.set("Doraemon", 10);
+   * map.set("Dora", 28);
+   * console.log(map.last()); // 28
+   * ```
    */
   last(): V | undefined;
   last(n: number): V[];
@@ -227,6 +233,12 @@ export class BetterMap<K, V> extends Map<K, V> {
   }
   /**
    * Get last key(s) in the Map.
+   * ```ts
+   * const map = new BetterMap<string, number>("People");
+   * map.set("Doraemon", 10);
+   * map.set("Dora", 28);
+   * console.log(map.lastKey()); // Dora
+   * ```
    */
   lastKey(): K | undefined;
   lastKey(n: number): K[];
@@ -352,6 +364,13 @@ export class BetterMap<K, V> extends Map<K, V> {
   }
   /**
    * Sort elements in the better map.
+   * ```ts
+   * const map = new BetterMap<string, number>("People");
+   * map.set("Doraemon", 10);
+   * map.set("Dora", 28);
+   * map.set("Pikachu", 7);
+   * console.log(map.sort((v1, v2) => v1 - v2)); // Sorts in the order Pikachu -> Doraemon -> Dora.
+   * ```
    * @param fn Function to use for sorting.
    * @returns {BetterMap<K, V>} sorted BetterMap.
    */
@@ -366,6 +385,13 @@ export class BetterMap<K, V> extends Map<K, V> {
   }
   /**
    * Split the Map into two Maps using a filtering function.
+   * ```ts
+   * const map = new BetterMap<string, number>("People");
+   * map.set("Doraemon", 10);
+   * map.set("Dora", 28);
+   * console.log(map.split(v => v > 10));
+   * // [{Doraemon => 28}, {Doraemon => 10}]
+   * ```
    * @param fn Function to be passed.
    * @returns An array of two maps: First map containing elements that passed and second map containing elements that didn't pass.
    */
@@ -391,7 +417,8 @@ export class BetterMap<K, V> extends Map<K, V> {
   }
   /**
    * Transform values of the map.
-   * Similar to map() but returns a BetterMap instead.
+   * Similar to `map()` but returns a BetterMap instead.
+   * Check `map()` for usage.
    * @param fn Function for mapping.
    * @returns
    */
@@ -404,19 +431,58 @@ export class BetterMap<K, V> extends Map<K, V> {
   }
   /**
    * Add all non-similar keys from another Map to this Map.
+   * ```ts
+   * import Pokemon from "https://deno.land/x/fortuna@v1.1.2/testdata/pokemon.json" assert {
+   *   type: "json",
+   * };
+   *
+   * interface PokemonData {
+   *   name: string;
+   *   id: number;
+   *   tier: string;
+   * }
+   *
+   * const b = new BetterMap<string, PokemonData>("Pokemon");
+   * for (const pokemon of Pokemon.slice(0, 100)) {
+   *   b.set(`${pokemon.name}`, pokemon);
+   * }
+   *
+   * const c = new BetterMap<string, PokemonData>("Pokemon");
+   * for (const pokemon of Pokemon.slice(50, 150)) {
+   *   c.set(`${pokemon.name}`, pokemon);
+   * }
+   *
+   * console.log(c.size)
+   * c.combine(b)
+   * console.log(c.size)
+   * ```
    * @param maps Map to combine with this instance.
    * @returns The modified Map.
    */
   combine(...maps: Map<K, V>[]): BetterMap<K, V> {
     for (const map of maps) {
       for (const entry of map.entries()) {
-        if (this.has(entry[0])) this.set(entry[0], entry[1]);
+        if (!this.has(entry[0])) this.set(entry[0], entry[1]);
       }
     }
     return this;
   }
   /**
-   * Create a new map from an existing Map or an array of key-value pairs
+   * Create a new map from an existing Map or an array of key-value pairs.
+   * ```ts
+   * import Pokemon from "https://deno.land/x/fortuna@v1.1.2/testdata/pokemon.json" assert {
+   *   type: "json",
+   * };
+   *
+   * interface PokemonData {
+   *   name: string;
+   *   id: number;
+   *   tier: string;
+   * }
+   *
+   * const b = BetterMap.from(Pokemon.map(x => [x.name, x]))
+   * console.log(b)
+   * ```
    * @param data Existing Map / Array of Key-Value pairs.
    * @returns {BetterMap<K1, V1>}
    */
@@ -432,6 +498,31 @@ export class BetterMap<K, V> extends Map<K, V> {
   }
   /**
    * Return the union of two maps. Maps are united by key and not by value.
+   * ```ts
+   * import Pokemon from "https://deno.land/x/fortuna@v1.1.2/testdata/pokemon.json" assert {
+   *   type: "json",
+   * };
+   *
+   * interface PokemonData {
+   *   name: string;
+   *   id: number;
+   *   tier: string;
+   * }
+   *
+   * const b = new BetterMap<string, PokemonData>("Pokemon");
+   * for (const pokemon of Pokemon.slice(0, 100)) {
+   *   b.set(`${pokemon.name}`, pokemon);
+   * }
+   *
+   * const c = new BetterMap<string, PokemonData>("Pokemon");
+   * for (const pokemon of Pokemon.slice(50, 150)) {
+   *   c.set(`${pokemon.name}`, pokemon);
+   * }
+   *
+   * console.log(c.size, b.size)
+   * const a = BetterMap.union(c, b)
+   * console.log(a.size)
+   * ```
    * @param maps Maps to combine.
    * @returns The modified Map.
    */
@@ -445,13 +536,38 @@ export class BetterMap<K, V> extends Map<K, V> {
     maps.shift();
     for (const map of maps) {
       for (const entry of map.entries()) {
-        if (newMap.has(entry[0])) newMap.set(entry[0], entry[1]);
+        if (!newMap.has(entry[0])) newMap.set(entry[0], entry[1]);
       }
     }
     return newMap;
   }
   /**
    * Return a Map with elements common to all maps supplied in the parameters.
+   * ```ts
+   * import Pokemon from "https://deno.land/x/fortuna@v1.1.2/testdata/pokemon.json" assert {
+   *   type: "json",
+   * };
+   *
+   * interface PokemonData {
+   *   name: string;
+   *   id: number;
+   *   tier: string;
+   * }
+   *
+   * const b = new BetterMap<string, PokemonData>("Pokemon");
+   * for (const pokemon of Pokemon.slice(0, 100)) {
+   *   b.set(`${pokemon.name}`, pokemon);
+   * }
+   *
+   * const c = new BetterMap<string, PokemonData>("Pokemon");
+   * for (const pokemon of Pokemon.slice(50, 150)) {
+   *   c.set(`${pokemon.name}`, pokemon);
+   * }
+   *
+   * console.log(c.size, b.size)
+   * const a = BetterMap.intersect(c, b)
+   * console.log(a.size)
+   * ```
    * @param maps Maps to intersect.
    * @returns BetterMap as an intersection of all provided Maps.
    */
