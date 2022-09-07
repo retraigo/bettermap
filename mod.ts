@@ -5,6 +5,7 @@ export class BetterMap<K, V> extends Map<K, V> {
   name: string;
   /**
    * Create a new BetterMap
+   * @example
    * ```ts
    * const map1 = new BetterMap();
    * const map2 = new BetterMap<string, number>();
@@ -18,6 +19,7 @@ export class BetterMap<K, V> extends Map<K, V> {
   }
   /**
    * Convert the map into an array of values / keys
+   * @example
    * ```ts
    * const map = new BetterMap<string, number>("People");
    * map.set("Doraemon", 10);
@@ -33,6 +35,7 @@ export class BetterMap<K, V> extends Map<K, V> {
   }
   /**
    * Return the nth element of the map.
+   * @example
    * ```ts
    * const map = new BetterMap<string, number>("People");
    * map.set("Doraemon", 10);
@@ -53,6 +56,7 @@ export class BetterMap<K, V> extends Map<K, V> {
   }
   /**
    * Array#every but for a Map
+   * @example
    * ```ts
    * const map = new BetterMap<string, number>("People");
    * map.set("Doraemon", 10);
@@ -73,6 +77,7 @@ export class BetterMap<K, V> extends Map<K, V> {
   }
   /**
    * Array#filter but for a Map
+   * @example
    * ```ts
    * const map = new BetterMap<string, number>("People");
    * map.set("Doraemon", 10);
@@ -94,6 +99,7 @@ export class BetterMap<K, V> extends Map<K, V> {
   }
   /**
    * Find an element from the Map.
+   * @example
    * ```ts
    * const map = new BetterMap<string, number>("People");
    * map.set("Doraemon", 10);
@@ -113,6 +119,7 @@ export class BetterMap<K, V> extends Map<K, V> {
   }
   /**
    * Find a key from the Map.
+   * @example
    * ```ts
    * const map = new BetterMap<string, number>("People");
    * map.set("Doraemon", 10);
@@ -132,6 +139,7 @@ export class BetterMap<K, V> extends Map<K, V> {
   }
   /**
    * Get the first element(s) from the map.
+   * @example
    * ```ts
    * const map = new BetterMap<string, number>("People");
    * map.set("Doraemon", 10);
@@ -153,6 +161,7 @@ export class BetterMap<K, V> extends Map<K, V> {
   }
   /**
    * Get the first (n) element's key from the map.
+   * @example
    * ```ts
    * const map = new BetterMap<string, number>("People");
    * map.set("Doraemon", 10);
@@ -174,6 +183,7 @@ export class BetterMap<K, V> extends Map<K, V> {
   }
   /**
    * Convert the key-value pairs into key-value pairs... I mean a JavaScript object.
+   * @example
    * ```ts
    * const map = new BetterMap<string, number>("People");
    * map.set("Doraemon", 10);
@@ -195,6 +205,7 @@ export class BetterMap<K, V> extends Map<K, V> {
   }
   /**
    * Return the nth key of the map.
+   * @example
    * ```ts
    * const map = new BetterMap<string, number>("People");
    * map.set("Doraemon", 10);
@@ -215,6 +226,7 @@ export class BetterMap<K, V> extends Map<K, V> {
   }
   /**
    * Get last value(s) in the Map.
+   * @example
    * ```ts
    * const map = new BetterMap<string, number>("People");
    * map.set("Doraemon", 10);
@@ -233,6 +245,7 @@ export class BetterMap<K, V> extends Map<K, V> {
   }
   /**
    * Get last key(s) in the Map.
+   * @example
    * ```ts
    * const map = new BetterMap<string, number>("People");
    * map.set("Doraemon", 10);
@@ -252,6 +265,7 @@ export class BetterMap<K, V> extends Map<K, V> {
 
   /**
    * Map the Map into an Array.
+   * @example
    * ```ts
    * const map = new BetterMap<string, number>("People");
    * map.set("Doraemon", 10);
@@ -271,6 +285,7 @@ export class BetterMap<K, V> extends Map<K, V> {
   }
   /**
    * Get a random element from the BetterMap.
+   * @example
    * ```ts
    * const map = new BetterMap<string, number>("People");
    * map.set("Doraemon", 10);
@@ -292,6 +307,7 @@ export class BetterMap<K, V> extends Map<K, V> {
   }
   /**
    * Get a random key from the BetterMap.
+   * @example
    * ```ts
    * const map = new BetterMap<string, number>("People");
    * map.set("Doraemon", 10);
@@ -323,6 +339,7 @@ export class BetterMap<K, V> extends Map<K, V> {
   }
   /**
    * Reduce data in the map.
+   * @example
    * ```ts
    * const map = new BetterMap<string, number>("People");
    * map.set("Doraemon", 10);
@@ -344,6 +361,26 @@ export class BetterMap<K, V> extends Map<K, V> {
   }
   /**
    * Shift all elements `n` places to the left. Warps around the map.
+   * @example
+   * ```ts
+   * import Pokemon from "https://deno.land/x/fortuna@v1.1.2/testdata/pokemon.json" assert {
+   *   type: "json",
+   * };
+   *
+   * interface PokemonData {
+   *   name: string;
+   *   id: number;
+   *   tier: string;
+   * }
+   * 
+   * const c = new BetterMap<string, PokemonData>("Pokemon");
+   * for (const pokemon of Pokemon.slice(50, 150)) {
+   *   c.set(`${pokemon.name}`, pokemon);
+   * }
+   *
+   * console.log(c.shift(7)) // Shift elements 7 places to the left.
+   * console.log(c.shift(-7)) // Shift elements 7 places to the right.
+   * ```
    * @param n Number of places to shift.
    */
   shift(n: number): BetterMap<K, V> {
@@ -389,6 +426,7 @@ export class BetterMap<K, V> extends Map<K, V> {
   }
   /**
    * Check if at least one entry from the Map passes the function.
+   * @example
    * ```ts
    * const map = new BetterMap<string, number>("People");
    * map.set("Doraemon", 10);
@@ -409,6 +447,7 @@ export class BetterMap<K, V> extends Map<K, V> {
   }
   /**
    * Sort elements in the better map.
+   * @example
    * ```ts
    * const map = new BetterMap<string, number>("People");
    * map.set("Doraemon", 10);
@@ -430,6 +469,7 @@ export class BetterMap<K, V> extends Map<K, V> {
   }
   /**
    * Split the Map into two Maps using a filtering function.
+   * @example
    * ```ts
    * const map = new BetterMap<string, number>("People");
    * map.set("Doraemon", 10);
@@ -476,6 +516,7 @@ export class BetterMap<K, V> extends Map<K, V> {
   }
   /**
    * Add all non-similar keys from another Map to this Map.
+   * @example
    * ```ts
    * import Pokemon from "https://deno.land/x/fortuna@v1.1.2/testdata/pokemon.json" assert {
    *   type: "json",
@@ -514,6 +555,7 @@ export class BetterMap<K, V> extends Map<K, V> {
   }
   /**
    * Create a new map from an existing Map or an array of key-value pairs.
+   * @example
    * ```ts
    * import Pokemon from "https://deno.land/x/fortuna@v1.1.2/testdata/pokemon.json" assert {
    *   type: "json",
@@ -558,6 +600,7 @@ export class BetterMap<K, V> extends Map<K, V> {
 
   /**
    * Return the union of two maps. Maps are united by key and not by value.
+   * @example
    * ```ts
    * import Pokemon from "https://deno.land/x/fortuna@v1.1.2/testdata/pokemon.json" assert {
    *   type: "json",
@@ -603,6 +646,7 @@ export class BetterMap<K, V> extends Map<K, V> {
   }
   /**
    * Return a Map with elements common to all maps supplied in the parameters.
+   * @example
    * ```ts
    * import Pokemon from "https://deno.land/x/fortuna@v1.1.2/testdata/pokemon.json" assert {
    *   type: "json",
