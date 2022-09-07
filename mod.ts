@@ -343,6 +343,51 @@ export class BetterMap<K, V> extends Map<K, V> {
     return result;
   }
   /**
+   * Shift all elements `n` places to the left. Warps around the map.
+   * @param n Number of places to shift.
+   */
+  shift(n: number): BetterMap<K, V> {
+    if (n > (this.size - 1)) n = n % (this.size - 1);
+    if (n < 0) n = (this.size) + (n % (this.size - 1));
+    const returnMap = new BetterMap<K, V>(this.name);
+    const data = this.entries();
+    const tail: [K, V][] = [];
+    while (n > 0) {
+      tail.push(data.next().value);
+      n -= 1;      
+    }
+    while (true) {
+      const val = data.next();
+      if(val.done) {
+        if(val.value) {
+          returnMap.set(val.value[0], val.value[1])
+        }
+        break;
+      }
+      returnMap.set(val.value[0], val.value[1])
+    }
+    for(const [k, v] of tail) {
+      returnMap.set(k, v)
+    }
+    return returnMap;
+  }
+  /**
+   * Shuffle the elements in the Map.
+   * @returns Shuffled map.
+   */
+  shuffle(): BetterMap<K, V> {
+    return this.sort((_) => Math.random() - 0.5);
+  }
+  /**
+   * Return a portion of the Map.
+   * @param start 
+   * @param end 
+   * @returns 
+   */
+  slice(start = 0, end = this.size): BetterMap<K, V> {
+    return BetterMap.from(Array.from(this.entries()).slice(start, end));
+  }
+  /**
    * Check if at least one entry from the Map passes the function.
    * ```ts
    * const map = new BetterMap<string, number>("People");
@@ -375,7 +420,7 @@ export class BetterMap<K, V> extends Map<K, V> {
    * @returns {BetterMap<K, V>} sorted BetterMap.
    */
   sort(fn: (v1: V, v2: V, k1: K, k2: K) => number = () => 0): BetterMap<K, V> {
-    const items = [...this.entries()];
+    const items = Array.from(this.entries());
     items.sort((a, b) => fn(a[1], b[1], a[0], b[0]));
     const newColl = new BetterMap<K, V>(this.name);
     for (const [k, v] of items) {
@@ -496,6 +541,21 @@ export class BetterMap<K, V> extends Map<K, V> {
     }
     return returnMap;
   }
+  /**
+   * A special case of Bettermap#from where the input is a Record.
+   * @param data A record.
+   * @returns Record converted into a BetterMap.
+   */
+  static fromRecord<K1 extends string | number | symbol, V1>(
+    data: Record<K1, V1>,
+  ): BetterMap<K1, V1> {
+    const returnMap = new BetterMap<K1, V1>();
+    for (const key in data) {
+      returnMap.set(key, data[key]);
+    }
+    return returnMap;
+  }
+
   /**
    * Return the union of two maps. Maps are united by key and not by value.
    * ```ts
