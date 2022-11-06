@@ -2,6 +2,13 @@
 
 An extension of the Map class with more Array-like features.
 
+## NOTE
+Maps are not ordered data structures. JavaScript Maps store elements in the order of insertion. 
+Any sorting / indexing method implemented involves converting the Map into an Array or Iterator
+to do necessary operations.
+
+Related: [Policy Maps and Sets for JavaScript](https://github.com/tc39/proposal-policy-map-set)
+
 **[Click here for docs](https://doc.deno.land/https://deno.land/x/bettermap/mod.ts)**
 
 ## Installation
